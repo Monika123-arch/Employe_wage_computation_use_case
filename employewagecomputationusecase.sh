@@ -8,6 +8,7 @@ IS_FULL_TIME=2
 IS_PART_TIME=1
 EMPLOYEE_HOUR_FULLTIME=8
 EMPLOYEE_HOUR_PARTTIME=4
+
 NUMBER_OF_WORKING_DAYS=20
 NUMBER_OF_WORKING_HOURS=100
 
@@ -55,3 +56,4 @@ done
 salary=$(($(calculateWage $totalEmployeeHours)))
 echo "Daily wages: ${dailyWage[@]}"
 echo "Total Wage:" $salary
+
