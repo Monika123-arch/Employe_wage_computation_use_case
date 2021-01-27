@@ -3,18 +3,44 @@
 echo "...................................Welcome to Employee Wage Computation..................................."
 
 #CONSTANT
-IS_PRESENT=1
 WAGE_PER_HOUR=20
+IS_FULL_TIME=2
+IS_PART_TIME=1
+EMPLOYEE_HOUR_FULLTIME=8
+EMPLOYEE_HOUR_PARTTIME=4
+NUMBER_OF_WORKING_DAYS=20
+NUMBER_OF_WORKING_HOURS=100
 
-#CHECK EMPLOYEE IS PRESENT OR ABSENT
-randomNumber=$((RANDOM%2))
-if [ $randomNumber -eq $IS_PRESENT ]
-then
-	echo "Employee is Present"
-	employeeHour=8
-else
-	echo "Employee is Absent"
-	employeeHour=0
-fi
-salary=$(($employeeHour*$WAGE_PER_HOUR))
-echo "Salary =" $salary
+#VARIABLE
+totalSalary=0
+totalEmployeeHours=0
+totalWorkingDays=0
+
+#FUNCTION TO GET WORK HOURS
+function getWorkHours()
+{
+	randomShiftCheck=$((RANDOM%3))
+	case $randomShiftCheck in
+
+		$IS_FULL_TIME )
+			employeeHour=$((EMPLOYEE_HOUR_FULLTIME))
+			;;
+		$IS_PART_TIME )
+			employeeHour=$((EMPLOYEE_HOUR_PARTTIME))
+			;;
+		* )
+			employeeHour=0
+			;;
+	esac
+	echo $employeeHour
+}
+
+#GET WORK HOUR FROM FUNCTION AND CALCULATE DAILY WAGE TILL CONDITION SATISFIED
+while [[ $totalEmployeeHours -le $NUMBER_OF_WORKING_HOURS && $totalWorkingDays -le $NUMBER_OF_WORKING_DAYS ]]
+do
+	((totalWorkingDays++))
+	totalEmployeeHours=$(($totalEmployeeHours + $(getWorkHours)))
+done
+
+#PRINT SALARY FOR A MONTH
+salary=$(($totalEmployeeHours * $WAGE_PER_HOUR))
