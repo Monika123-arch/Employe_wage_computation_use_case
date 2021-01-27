@@ -11,15 +11,20 @@ EMPLOYEE_HOUR_PARTTIME=4
 
 #CHECK EMPLOYEE IS PRESENT OR ABSENT
 randomShiftCheck=$((RANDOM%3))
-if [ $randomShiftCheck -eq $IS_FULL_TIME ]
-then
-	employeeHour=$((EMPLOYEE_HOUR_FULLTIME))
-elif [ $randomShiftCheck -eq $IS_PART_TIME ]
-then
-	employeeHour=$((EMPLOYEE_HOUR_PARTTIME))
-else
-	employeeHour=0
-fi
+
+
+case $randomShiftCheck in
+
+	$IS_FULL_TIME )
+		employeeHour=$((EMPLOYEE_HOUR_FULLTIME))
+		;;
+	$IS_PART_TIME )
+		employeeHour=$((EMPLOYEE_HOUR_PARTTIME))
+		;;
+	* )
+		employeeHour=0
+		;;
+esac
 
 #PRINT SALARY
 salary=$(($employeeHour*$WAGE_PER_HOUR))
