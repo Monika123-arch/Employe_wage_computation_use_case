@@ -20,7 +20,7 @@ totalWorkingDays=0
 #FUNCTION TO GET WORK HOURS
 function getWorkHours()
 {
-randomShiftCheck=$((RANDOM%3))
+	randomShiftCheck=$((RANDOM%3))
 	case $randomShiftCheck in
 
 		$IS_FULL_TIME )
@@ -36,16 +36,24 @@ randomShiftCheck=$((RANDOM%3))
 	echo $employeeHour
 }
 
+#FUNCTION TO CALCULATE WAGE
+function calculateWage()
+{
+	employeeHour=$1
+	wage=$(($employeeHour*$WAGE_PER_HOUR))
+	echo $wage
+}
+
 #GET WORK HOUR FROM FUNCTION AND CALCULATE DAILY WAGE TILL CONDITION SATISFIED
-while [[ $totalEmployeeHours -le $NUMBER_OF_WORKING_HOURS && $totalWorkingDays -le $NUMBER_OF_WORKING_DAYS ]]
+while [[ $totalEmployeeHours -lt $NUMBER_OF_WORKING_HOURS && $totalWorkingDays -lt $NUMBER_OF_WORKING_DAYS ]]
 do
 	((totalWorkingDays++))
+	dailyWage[totalWorkingDays]=$(calculateWage $(getWorkHours))
 	totalEmployeeHours=$(($totalEmployeeHours + $(getWorkHours)))
-
-	totalEmployeeHours=$(($totalEmployeeHours + $employeeHour))
-
 done
 
 #PRINT SALARY FOR A MONTH
-salary=$(($totalEmployeeHours * $WAGE_PER_HOUR))
+salary=$(($(calculateWage $totalEmployeeHours)))
+echo "Daily wages: ${dailyWage[@]}"
+echo "Total Wage:" $salary
 
