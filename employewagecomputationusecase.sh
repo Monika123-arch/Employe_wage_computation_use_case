@@ -17,18 +17,10 @@ totalSalary=0
 totalEmployeeHours=0
 totalWorkingDays=0
 
-#CALCULATE DAILY WAGE TILL CONDITION SATISFIED
-while [[ $totalEmployeeHours -le $NUMBER_OF_WORKING_HOURS &&
-			$totalWorkingDays -le $NUMBER_OF_WORKING_DAYS ]]
-do
-	((totalWorkingDays++))
-
-
-#CHECK EMPLOYEE IS PRESENT OR ABSENT
-
-for ((index=1; $index<=$NUMBER_OF_WORKING_DAYS; index++))
-do
-	randomShiftCheck=$((RANDOM%3))
+#FUNCTION TO GET WORK HOURS
+function getWorkHours()
+{
+randomShiftCheck=$((RANDOM%3))
 	case $randomShiftCheck in
 
 		$IS_FULL_TIME )
@@ -41,13 +33,19 @@ do
 			employeeHour=0
 			;;
 	esac
+	echo $employeeHour
+}
+
+#GET WORK HOUR FROM FUNCTION AND CALCULATE DAILY WAGE TILL CONDITION SATISFIED
+while [[ $totalEmployeeHours -le $NUMBER_OF_WORKING_HOURS && $totalWorkingDays -le $NUMBER_OF_WORKING_DAYS ]]
+do
+	((totalWorkingDays++))
+	totalEmployeeHours=$(($totalEmployeeHours + $(getWorkHours)))
 
 	totalEmployeeHours=$(($totalEmployeeHours + $employeeHour))
+
 done
 
 #PRINT SALARY FOR A MONTH
 salary=$(($totalEmployeeHours * $WAGE_PER_HOUR))
-
-
-
 
