@@ -10,9 +10,19 @@ EMPLOYEE_HOUR_FULLTIME=8
 EMPLOYEE_HOUR_PARTTIME=4
 
 NUMBER_OF_WORKING_DAYS=20
+NUMBER_OF_WORKING_HOURS=100
 
 #VARIABLE
 totalSalary=0
+totalEmployeeHours=0
+totalWorkingDays=0
+
+#CALCULATE DAILY WAGE TILL CONDITION SATISFIED
+while [[ $totalEmployeeHours -le $NUMBER_OF_WORKING_HOURS &&
+			$totalWorkingDays -le $NUMBER_OF_WORKING_DAYS ]]
+do
+	((totalWorkingDays++))
+
 
 #CHECK EMPLOYEE IS PRESENT OR ABSENT
 
@@ -31,10 +41,13 @@ do
 			employeeHour=0
 			;;
 	esac
-	salary=$(($employeeHour*$WAGE_PER_HOUR))
-	totalSalary=$(($totalSalary+$salary))
+
+	totalEmployeeHours=$(($totalEmployeeHours + $employeeHour))
 done
 
-#PRINT SALARY
-echo "Wages for a Month =" $totalSalary
+#PRINT SALARY FOR A MONTH
+salary=$(($totalEmployeeHours * $WAGE_PER_HOUR))
+
+
+
 
