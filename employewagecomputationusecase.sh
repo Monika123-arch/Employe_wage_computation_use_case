@@ -12,6 +12,7 @@ EMPLOYEE_HOUR_PARTTIME=4
 #CHECK EMPLOYEE IS PRESENT OR ABSENT
 randomShiftCheck=$((RANDOM%3))
 
+
 case $randomShiftCheck in
 
 	$IS_FULL_TIME )
