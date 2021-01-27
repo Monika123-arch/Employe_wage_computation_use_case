@@ -9,22 +9,32 @@ IS_PART_TIME=1
 EMPLOYEE_HOUR_FULLTIME=8
 EMPLOYEE_HOUR_PARTTIME=4
 
+NUMBER_OF_WORKING_DAYS=20
+
+#VARIABLE
+totalSalary=0
+
 #CHECK EMPLOYEE IS PRESENT OR ABSENT
-randomShiftCheck=$((RANDOM%3))
 
+for ((index=1; $index<=$NUMBER_OF_WORKING_DAYS; index++))
+do
+	randomShiftCheck=$((RANDOM%3))
+	case $randomShiftCheck in
 
-case $randomShiftCheck in
-
-	$IS_FULL_TIME )
-		employeeHour=$((EMPLOYEE_HOUR_FULLTIME))
-		;;
-	$IS_PART_TIME )
-		employeeHour=$((EMPLOYEE_HOUR_PARTTIME))
-		;;
-	* )
-		employeeHour=0
-		;;
-esac
+		$IS_FULL_TIME )
+			employeeHour=$((EMPLOYEE_HOUR_FULLTIME))
+			;;
+		$IS_PART_TIME )
+			employeeHour=$((EMPLOYEE_HOUR_PARTTIME))
+			;;
+		* )
+			employeeHour=0
+			;;
+	esac
+	salary=$(($employeeHour*$WAGE_PER_HOUR))
+	totalSalary=$(($totalSalary+$salary))
+done
 
 #PRINT SALARY
-salary=$(($employeeHour*$WAGE_PER_HOUR))
+echo "Wages for a Month =" $totalSalary
+
